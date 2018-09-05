@@ -73,11 +73,10 @@ open class EPContactsPicker: UITableViewController, UISearchResultsUpdating, UIS
             controller.searchBar.delegate = self
 			
 			if let textfield = controller.searchBar.value(forKey: "searchField") as? UITextField {
-				let color = UIColor(red: 13/255.0, green: 224/255.0, blue: 252/255.0, alpha: 1.0)
 				textfield.attributedPlaceholder = NSAttributedString(string: "Buscar contactos",
-														   attributes: [NSAttributedStringKey.foregroundColor: color])
+														   attributes: [NSAttributedStringKey.foregroundColor: EPGlobalConstants.Colors.lightBlue])
 				textfield.backgroundColor = .white
-				textfield.textColor = color
+				textfield.textColor = EPGlobalConstants.Colors.lightBlue
 			}
             self.tableView.tableHeaderView = controller.searchBar
             return controller
@@ -87,6 +86,7 @@ open class EPContactsPicker: UITableViewController, UISearchResultsUpdating, UIS
     func inititlizeBarButtons() {
         if multiSelectEnabled {
             let doneButton = UIBarButtonItem(title: "Invitar", style: .plain, target: self, action: #selector(onTouchDoneButton))
+			doneButton.tintColor = EPGlobalConstants.Colors.lightBlue
 			doneButton.isEnabled = false
             self.navigationItem.rightBarButtonItem = doneButton
             
@@ -290,6 +290,7 @@ open class EPContactsPicker: UITableViewController, UISearchResultsUpdating, UIS
             }
             else {
                 cell.accessoryType = UITableViewCellAccessoryType.checkmark
+				cell.tintColor = EPGlobalConstants.Colors.lightBlue
                 selectedContacts.append(selectedContact)
             }
         }

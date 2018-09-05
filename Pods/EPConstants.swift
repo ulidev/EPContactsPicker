@@ -30,6 +30,7 @@ struct EPGlobalConstants {
         static let amethystColor = UIColor(red: (155/255), green: (89/255), blue: (182/255), alpha: 1.0)
         static let peterRiverColor = UIColor(red: (52/255), green: (152/255), blue: (219/255), alpha: 1.0)
         static let pomegranateColor = UIColor(red: (192/255), green: (57/255), blue: (43/255), alpha: 1.0)
+		static let lightBlue = UIColor(red: 13/255.0, green: 224/255.0, blue: 252/255.0, alpha: 1.0)
     }
     
     
