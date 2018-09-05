@@ -67,8 +67,18 @@ open class EPContactsPicker: UITableViewController, UISearchResultsUpdating, UIS
             controller.searchResultsUpdater = self
             controller.dimsBackgroundDuringPresentation = false
             controller.hidesNavigationBarDuringPresentation = false
+			controller.searchBar.barTintColor = .white
+			controller.searchBar.tintColor = UIColor(red: 13/255.0, green: 224/255.0, blue: 252/255.0, alpha: 1.0)
             controller.searchBar.sizeToFit()
             controller.searchBar.delegate = self
+			
+			if let textfield = controller.searchBar.value(forKey: "searchField") as? UITextField {
+				let color = UIColor(red: 13/255.0, green: 224/255.0, blue: 252/255.0, alpha: 1.0)
+				textfield.attributedPlaceholder = NSAttributedString(string: "Buscar contactos",
+														   attributes: [NSForegroundColorAttributeName: color])
+				textfield.backgroundColor = .white
+				textfield.textColor = color
+			}
             self.tableView.tableHeaderView = controller.searchBar
             return controller
         })()
@@ -89,9 +99,7 @@ open class EPContactsPicker: UITableViewController, UISearchResultsUpdating, UIS
         
         let podBundle = Bundle(for: self.classForCoder)
         if let bundleURL = podBundle.url(forResource: EPGlobalConstants.Strings.bundleIdentifier, withExtension: "bundle") {
-            
             if let bundle = Bundle(url: bundleURL) {
-                
                 let cellNib = UINib(nibName: EPGlobalConstants.Strings.cellNibIdentifier, bundle: bundle)
                 tableView.register(cellNib, forCellReuseIdentifier: "Cell")
             }
@@ -100,7 +108,6 @@ open class EPContactsPicker: UITableViewController, UISearchResultsUpdating, UIS
             }
         }
         else {
-            
             let cellNib = UINib(nibName: EPGlobalConstants.Strings.cellNibIdentifier, bundle: nil)
             tableView.register(cellNib, forCellReuseIdentifier: "Cell")
         }

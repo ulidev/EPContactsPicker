@@ -12,10 +12,7 @@ class EPContactCell: UITableViewCell {
 
     @IBOutlet weak var contactTextLabel: UILabel!
     @IBOutlet weak var contactDetailTextLabel: UILabel!
-    @IBOutlet weak var contactImageView: UIImageView!
-    @IBOutlet weak var contactInitialLabel: UILabel!
-    @IBOutlet weak var contactContainerView: UIView!
-    
+	
     var contact: EPContact?
     
     override func awakeFromNib() {
@@ -23,8 +20,6 @@ class EPContactCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         selectionStyle = UITableViewCellSelectionStyle.none
-        contactContainerView.layer.masksToBounds = true
-        contactContainerView.layer.cornerRadius = contactContainerView.frame.size.width/2
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -34,8 +29,6 @@ class EPContactCell: UITableViewCell {
     func updateInitialsColorForIndexPath(_ indexpath: IndexPath) {
         //Applies color to Initial Label
         let colorArray = [EPGlobalConstants.Colors.amethystColor,EPGlobalConstants.Colors.asbestosColor,EPGlobalConstants.Colors.emeraldColor,EPGlobalConstants.Colors.peterRiverColor,EPGlobalConstants.Colors.pomegranateColor,EPGlobalConstants.Colors.pumpkinColor,EPGlobalConstants.Colors.sunflowerColor]
-        let randomValue = (indexpath.row + indexpath.section) % colorArray.count
-        contactInitialLabel.backgroundColor = colorArray[randomValue]
     }
  
     func updateContactsinUI(_ contact: EPContact, indexPath: IndexPath, subtitleType: SubtitleCellValue) {
@@ -44,14 +37,8 @@ class EPContactCell: UITableViewCell {
         self.contactTextLabel?.text = contact.displayName()
         updateSubtitleBasedonType(subtitleType, contact: contact)
         if contact.thumbnailProfileImage != nil {
-            self.contactImageView?.image = contact.thumbnailProfileImage
-            self.contactImageView.isHidden = false
-            self.contactInitialLabel.isHidden = true
         } else {
-            self.contactInitialLabel.text = contact.contactInitials()
             updateInitialsColorForIndexPath(indexPath)
-            self.contactImageView.isHidden = true
-            self.contactInitialLabel.isHidden = false
         }
     }
     
