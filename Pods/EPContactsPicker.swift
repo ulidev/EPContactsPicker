@@ -75,7 +75,7 @@ open class EPContactsPicker: UITableViewController, UISearchResultsUpdating, UIS
 			if let textfield = controller.searchBar.value(forKey: "searchField") as? UITextField {
 				let color = UIColor(red: 13/255.0, green: 224/255.0, blue: 252/255.0, alpha: 1.0)
 				textfield.attributedPlaceholder = NSAttributedString(string: "Buscar contactos",
-														   attributes: [NSForegroundColorAttributeName: color])
+														   attributes: [NSAttributedStringKey.foregroundColor: color])
 				textfield.backgroundColor = .white
 				textfield.textColor = color
 			}
@@ -333,13 +333,13 @@ open class EPContactsPicker: UITableViewController, UISearchResultsUpdating, UIS
     
     // MARK: - Button Actions
     
-    func onTouchCancelButton() {
+    @objc func onTouchCancelButton() {
         dismiss(animated: true, completion: {
             self.contactDelegate?.epContactPicker(self, didCancel: NSError(domain: "EPContactPickerErrorDomain", code: 2, userInfo: [ NSLocalizedDescriptionKey: "User Canceled Selection"]))
         })
     }
     
-    func onTouchDoneButton() {
+    @objc func onTouchDoneButton() {
         dismiss(animated: true, completion: {
             self.contactDelegate?.epContactPicker(self, didSelectMultipleContacts: self.selectedContacts)
         })
