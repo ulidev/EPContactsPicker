@@ -53,7 +53,7 @@ open class EPContactsPicker: UITableViewController, UISearchResultsUpdating, UIS
     
     override open func viewDidLoad() {
         super.viewDidLoad()
-        self.title = EPGlobalConstants.Strings.contactsTitle
+        self.title = self.title ?? EPGlobalConstants.Strings.contactsTitle
 
         registerContactCell()
         inititlizeBarButtons()
@@ -85,11 +85,9 @@ open class EPContactsPicker: UITableViewController, UISearchResultsUpdating, UIS
     }
     
     func inititlizeBarButtons() {
-        let cancelButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: self, action: #selector(onTouchCancelButton))
-        self.navigationItem.leftBarButtonItem = cancelButton
-        
         if multiSelectEnabled {
-            let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(onTouchDoneButton))
+            let doneButton = UIBarButtonItem(title: "Invitar", style: .plain, target: self, action: #selector(onTouchDoneButton))
+			doneButton.isEnabled = false
             self.navigationItem.rightBarButtonItem = doneButton
             
         }
@@ -112,12 +110,7 @@ open class EPContactsPicker: UITableViewController, UISearchResultsUpdating, UIS
             tableView.register(cellNib, forCellReuseIdentifier: "Cell")
         }
     }
-
-    override open func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
+	
     // MARK: - Initializers
   
     convenience public init(delegate: EPPickerDelegate?) {
@@ -309,6 +302,8 @@ open class EPContactsPicker: UITableViewController, UISearchResultsUpdating, UIS
 				}
 			})
         }
+		
+		self.navigationItem.rightBarButtonItem?.isEnabled = selectedContacts.count > 0
     }
     
     override open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -332,13 +327,6 @@ open class EPContactsPicker: UITableViewController, UISearchResultsUpdating, UIS
     }
     
     // MARK: - Button Actions
-    
-    @objc func onTouchCancelButton() {
-        dismiss(animated: true, completion: {
-            self.contactDelegate?.epContactPicker(self, didCancel: NSError(domain: "EPContactPickerErrorDomain", code: 2, userInfo: [ NSLocalizedDescriptionKey: "User Canceled Selection"]))
-        })
-    }
-    
     @objc func onTouchDoneButton() {
         dismiss(animated: true, completion: {
             self.contactDelegate?.epContactPicker(self, didSelectMultipleContacts: self.selectedContacts)
